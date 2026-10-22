@@ -1,5 +1,185 @@
 # Changelog
 
+## 10.1.0 - 2026-10-22
+
+### Changed (15)
+
+#### REST API
+
+- Added parameter `forceRefresh`
+  - affected methods:
+    - `get_de_fi_positions()` (`POST /api/v1/defi/data/position/list`)
+- Added parameter `positionAddress`
+  - affected methods:
+    - `build_de_fi_redeem_transaction()` (`POST /api/v1/defi/transaction/redeem`)
+- Added parameter `stakeAccounts`
+  - affected methods:
+    - `build_de_fi_claim_transaction()` (`POST /api/v1/defi/transaction/claim`)
+    - `build_de_fi_redeem_transaction()` (`POST /api/v1/defi/transaction/redeem`)
+- Modified response for `get_de_fi_positions()` (`POST /api/v1/defi/data/position/list`):
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `data`.`addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+
+- Added response field `userStakeAccount`
+  - affected events:
+    - `PositionDetailResp`
+- Added response field `stakeAccounts`
+  - affected events:
+    - `buildDeFiClaimTransactionRequest`
+    - `buildDeFiRedeemTransactionRequest`
+- Added response field `positionAddress`
+  - affected events:
+    - `buildDeFiRedeemTransactionRequest`
+- Added response field `forceRefresh`
+  - affected events:
+    - `getDeFiPositionsRequest`
+- Modified response field `protocolList`:
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - affected events:
+    - `AddressResp`
+- Modified response field `positionCollectionList`:
+  - items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - affected events:
+    - `PoolResp`
+- Modified response field `positionList`:
+  - items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionDetail`: property `userStakeAccount` added
+  - affected events:
+    - `PositionCollectionResp`
+- Modified response field `addressList`:
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - affected events:
+    - `PositionListResp`
+- Modified response field `positionDetail`:
+  - property `userStakeAccount` added
+  - affected events:
+    - `PositionResp`
+- Modified response field `poolList`:
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - affected events:
+    - `ProtocolResp`
+- Modified response field `data`:
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - `addressList`.items.`protocolList`.items.`poolList`.items.`positionCollectionList`.items.`positionList`.items.`positionDetail`: property `userStakeAccount` added
+  - affected events:
+    - `getDeFiPositionsResponse`
+
 ## 10.0.0 - 2026-10-16
 
 ### Changed (2)

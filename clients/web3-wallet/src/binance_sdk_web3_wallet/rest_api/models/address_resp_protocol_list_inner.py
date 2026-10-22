@@ -31,7 +31,7 @@ class AddressRespProtocolListInner(BaseModel):
 
     binance_chain_id: Optional[StrictStr] = Field(
         default=None,
-        description="Binance chain ID. Plain numeric string for EVM chains — see Supported Chains & Protocols for the supported values.",
+        description='Binance chain ID. Plain numeric string for EVM chains (e.g. `"56"` = BNB Smart Chain); non-EVM chains use a `CT_`-prefixed string (e.g. `"CT_501"` = Solana), consistent with the Trading / Transaction APIs. See Supported Chains & Protocols for the supported values.',
         alias="binanceChainId",
     )
     defi_protocol_id: Optional[StrictStr] = Field(

@@ -28,7 +28,7 @@ class DefiPreviewFeeAndContractEstimatedNetworkFee(BaseModel):
 
     amount: Optional[StrictStr] = Field(
         default=None,
-        description="Estimated gas fee in the gas-paying token (human-readable).",
+        description="Estimated gas fee in the fee-paying native coin (human-readable). On Solana this may be `null` even when fee estimation succeeded — use `valueUsd` as the reliable figure when `amount` is absent.",
     )
     token_symbol: Optional[StrictStr] = Field(
         default=None,
@@ -40,17 +40,17 @@ class DefiPreviewFeeAndContractEstimatedNetworkFee(BaseModel):
     )
     rent_fee_amount: Optional[StrictStr] = Field(
         default=None,
-        description="Storage / rent fee portion (human-readable), if applicable.",
+        description="Solana storage / rent fee portion (human-readable). `null` on EVM chains; only populated on Solana when the action creates an account (e.g. a first-time ATA).",
         alias="rentFeeAmount",
     )
     rent_fee_value_usd: Optional[StrictStr] = Field(
         default=None,
-        description="USD value of the storage / rent fee, if applicable.",
+        description="USD value of the Solana rent fee. `null` on EVM chains; Solana-only.",
         alias="rentFeeValueUsd",
     )
     priority_fee_amount: Optional[StrictStr] = Field(
         default=None,
-        description="Priority fee portion (human-readable), if broken out.",
+        description="Solana priority fee portion (human-readable). `null` on EVM chains; Solana-only.",
         alias="priorityFeeAmount",
     )
     additional_properties: Dict[str, Any] = {}

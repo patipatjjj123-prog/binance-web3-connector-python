@@ -52,6 +52,7 @@ class DefiTransactionApi:
         defi_protocol_id: Optional[str] = None,
         nft_id: Optional[str] = None,
         redemption_id: Optional[str] = None,
+        stake_accounts: Optional[List[str]] = None,
         token_address_list: Optional[List[str]] = None,
         simulate: Optional[bool] = None,
     ) -> ApiResponse[BuildDeFiClaimTransactionResponse]:
@@ -73,14 +74,15 @@ class DefiTransactionApi:
 
                 Args:
                     address (Union[str, None]): User wallet address (the signer / sender).
-                    claim_type (Union[BuildDeFiClaimTransactionClaimTypeEnum, None]): Claim routing type. Determines which companion fields are required: - `REWARD_PROTOCOL`: protocol-level rewards (e.g. Aave incentive, Radiant) — requires `defiProtocolId` + `binanceChainId` - `REWARD_INVESTMENT`: per-investment rewards — requires `investmentId` - `LP_FEE`: Uniswap V3/V4 LP fees — requires `investmentId` + `nftId` - `REDEMPTION`: redeem principal (Lista / Aster / Solv etc.) — requires `investmentId` + `redemptionId`  **Protocol constraints** — not every `claimType` is valid for every protocol; an invalid combination is rejected (`40453` or `40454`): - `REWARD_PROTOCOL` is **not** supported for LP (liquidity-pool) protocols in this release. - `REWARD_INVESTMENT` is not supported for PancakeSwap V3 farming positions; use `LP_FEE`   to claim farming incentives there. - `LP_FEE` applies only to concentrated-liquidity (V3/V4) LP positions. - `REDEMPTION` applies only to protocols with a redemption / lock-up flow (Lista, Aster, Solv).  The valid `claimType`s for a specific position are returned in that position's `positionDetail.claimTypes` (see the position list) — branch on that rather than hard-coding the mapping. Note: error messages may surface the protocol id with a chain prefix (e.g. `bsc_pancakeswap4`); the canonical id in API fields is the un-prefixed form (e.g. `pancakeswap4`).
+                    claim_type (Union[BuildDeFiClaimTransactionClaimTypeEnum, None]): Claim routing type. Determines which companion fields are required: - `REWARD_PROTOCOL`: protocol-level rewards (e.g. Aave incentive, Radiant) — requires `defiProtocolId` + `binanceChainId` - `REWARD_INVESTMENT`: per-investment rewards — requires `investmentId` - `LP_FEE`: Uniswap V3/V4 LP fees — requires `investmentId` + `nftId` - `REDEMPTION`: redeem principal. Requires `investmentId` + `redemptionId` for EVM protocols   (Lista, Aster, Solv) and for Solana protocols whose redeem mints a withdrawal ticket   (`renzo`, `marinadefinance` liquid, `jito`, `solayer`, `fragmetric`, `jupiter` Stake JUP) — the   `redemptionId` comes from the position list and is populated once the cooldown ends   (`unlockTimeReached = true`). For Solana native staking (`sol_staking`) and Jupiter jupSOL   (whose claim handle surfaces under `sol_staking`), substitute `stakeAccounts` for   `redemptionId` (no redemption record).  **Protocol constraints** — not every `claimType` is valid for every protocol; an invalid combination is rejected (`40453` or `40454`): - `REWARD_PROTOCOL` is **not** supported for LP (liquidity-pool) protocols in this release. - `REWARD_INVESTMENT` is not supported for PancakeSwap V3 farming positions; use `LP_FEE`   to claim farming incentives there. - `LP_FEE` applies only to concentrated-liquidity (V3/V4) LP positions, including Solana   CLMM (`raydium3`, `orca3`). - `REDEMPTION` applies only to protocols with a redemption / lock-up flow: EVM Lista /   Aster / Solv, and on Solana `sol_staking`, `renzo`, `marinadefinance`,   `jito`, `solayer`, `fragmetric`, and `jupiter` stake surfaces. - Some Solana protocols auto-compound rewards into the position value (e.g. `sol_staking`,   `marinadefinance`, `jito`); their `claimReward` (`REWARD_PROTOCOL` /   `REWARD_INVESTMENT`) is not supported and is rejected with `40481`.  For a given position, prefer the `claimTypes` / `redemptionId` / `userStakeAccount` fields returned by the position list to decide the claim path — see Integration Flow.
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
                     binance_chain_id (Optional[str] = None): Binance chain ID. For `REWARD_PROTOCOL` (which does not use `investmentId`) this is the only chain signal and is required. For all other claim types the chain is resolved from `investmentId` and any client-supplied value is silently ignored — the call still executes on the `investmentId` chain, so a different chainId does not redirect the claim.
                     investment_id (Optional[str] = None): Required for `REWARD_INVESTMENT`, `LP_FEE`, and `REDEMPTION`. Not used for `REWARD_PROTOCOL` (which keys off `defiProtocolId`).
                     defi_protocol_id (Optional[str] = None): Required for `REWARD_PROTOCOL` (e.g. `pancakeswap3`).
                     nft_id (Optional[str] = None): Required for `LP_FEE`. The NFT token ID as a decimal string (e.g. `"7225901"` or `"#7225901"`). The `#` prefix returned by the position list may be passed as-is — the service strips it automatically.
-                    redemption_id (Optional[str] = None): Required for `REDEMPTION`. Maps to the `redemptionId` returned in the position list (the on-line position index).
+                    redemption_id (Optional[str] = None): Required for `REDEMPTION` on EVM and on the Solana protocols whose redeem mints a withdrawal ticket / record (`renzo`, `marinadefinance` liquid, `jito`, `solayer`, `fragmetric`, `jupiter` Stake JUP). Maps to the `redemptionId` returned in the position list (the on-line position index), and is only populated once the cooldown ends (`unlockTimeReached = true`; `null` while cooling down). For Solana native staking (`sol_staking`) and Jupiter jupSOL (`jupiter` stake surfaces) under `REDEMPTION`, pass `stakeAccounts` instead — these have no redemption record, so `redemptionId` becomes optional when `stakeAccounts` is supplied.
+                    stake_accounts (Optional[List[str]] = None): Base58 stake account address(es) — the account(s) to withdraw after the deactivation cooldown. Required for `REDEMPTION` on Solana native staking (`sol_staking`) and Jupiter jupSOL (claimed under `sol_staking` in the position list; pass the `sol_staking` or the jupSOL `investmentId` + this address). Makes `redemptionId` optional for these (no redemption record). Do **not** pass `stakeAccounts` for Stake JUP (`jupiter` `stake_jup`) — it uses `redemptionId`, and passing `stakeAccounts` builds a transaction that fails on-chain. Passing `stakeAccounts` for any other protocol (EVM, LP, or other Solana protocols whose redeem produces a ticket — those use `redemptionId`) is also a parameter error. This release supports exactly one element (length at most 1).
                     token_address_list (Optional[List[str]] = None): Optional token address filter to narrow the claim scope.
                     simulate (Optional[bool] = None): When `true`, the response also includes a `preview` object. Default `false`. If the simulated transaction reverts, the request returns `40485` for a specific classified revert reason or `40484` for any other revert (see Error Codes).
 
@@ -115,6 +117,7 @@ class DefiTransactionApi:
             "defi_protocol_id": defi_protocol_id,
             "nft_id": nft_id,
             "redemption_id": redemption_id,
+            "stake_accounts": stake_accounts,
             "token_address_list": token_address_list,
             "simulate": simulate,
         }
@@ -213,6 +216,8 @@ class DefiTransactionApi:
         token: Optional[BuildDeFiRedeemTransactionRequestToken] = None,
         ratio: Optional[str] = None,
         slippage_bps: Optional[str] = None,
+        stake_accounts: Optional[List[str]] = None,
+        position_address: Optional[str] = None,
         simulate: Optional[bool] = None,
     ) -> ApiResponse[BuildDeFiRedeemTransactionResponse]:
         """
@@ -242,6 +247,8 @@ class DefiTransactionApi:
                     token (Optional[BuildDeFiRedeemTransactionRequestToken] = None):
                     ratio (Optional[str] = None): Redeem ratio, mutually exclusive with `token`. Omitted / blank → exact-amount redeem via `token` (`tokenAddress` + `amount`, position not queried). Present → must parse as a decimal in `(0, 1]`; the service queries the on-chain position under `investmentId` and scales each token amount by `ratio` (floored to decimals). `"1"` = full (max) redeem; in this mode `token` is ignored.
                     slippage_bps (Optional[str] = None): Slippage tolerance in basis points (e.g. `300` = 3%).
+                    stake_accounts (Optional[List[str]] = None): Base58 stake account address(es) — the account(s) to deactivate. Required for Solana native staking (`sol_staking`) redeem only; the whole stake account is redeemed and `token` / `ratio` are ignored in this mode. Passing `stakeAccounts` for any other protocol (EVM chains, LP, or other Solana protocols) is a parameter error. This release supports exactly one element (length at most 1).
+                    position_address (Optional[str] = None): Base58 position PDA for Jupiter Lend Borrow (`jupiter`, surface `lend_borrow_supply`) redeem — one vault may hold several positions for the same address, so the caller must name which to withdraw. Take it from `position/list`'s `positionDetail.positionIndex`. Required for a Lend Borrow redeem; `token` / `ratio` still decide the amount to withdraw. Passing `positionAddress` for any other protocol is a parameter error.
                     simulate (Optional[bool] = None): When `true`, the response also includes a `preview` object. Default `false`. If the simulated transaction reverts, the request returns an error code instead of a `200` with `preview.success=false`: `40485` when the redeem amount exceeds the current position, `40484` for any other revert (see Error Codes).
 
                 Returns:
@@ -273,6 +280,8 @@ class DefiTransactionApi:
             "token": token,
             "ratio": ratio,
             "slippage_bps": slippage_bps,
+            "stake_accounts": stake_accounts,
+            "position_address": position_address,
             "simulate": simulate,
         }
 

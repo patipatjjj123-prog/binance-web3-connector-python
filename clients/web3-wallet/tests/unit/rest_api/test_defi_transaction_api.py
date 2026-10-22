@@ -76,6 +76,7 @@ class TestDefiTransactionApi:
             "defi_protocol_id": "pancakeswap3",
             "nft_id": "123456",
             "redemption_id": "test-redemption-1",
+            "stake_accounts": ["5vUt9pxBK9KaaHm19okrwSuP2vUU71Nm7ScsBiSqsW1s"],
             "token_address_list": ["0x55d398326f99059fF775485246999027B3197955"],
             "simulate": "True",
         }
@@ -90,7 +91,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -165,6 +166,10 @@ class TestDefiTransactionApi:
         assert normalized["nftId"] == "123456"
         assert normalized["redemptionId"] == "test-redemption-1"
         assert (
+            normalized["stakeAccounts"]
+            == '["5vUt9pxBK9KaaHm19okrwSuP2vUU71Nm7ScsBiSqsW1s"]'
+        )
+        assert (
             normalized["tokenAddressList"]
             == '["0x55d398326f99059fF775485246999027B3197955"]'
         )
@@ -211,6 +216,7 @@ class TestDefiTransactionApi:
             "defi_protocol_id": "defi_protocol_id_example",
             "nft_id": "nft_id_example",
             "redemption_id": "redemption_id_example",
+            "stake_accounts": [""],
             "token_address_list": [""],
             "simulate": True,
         }
@@ -225,7 +231,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -376,7 +382,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -499,7 +505,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -648,6 +654,8 @@ class TestDefiTransactionApi:
             },
             "ratio": "1",
             "slippage_bps": "300",
+            "stake_accounts": ["5vUt9pxBK9KaaHm19okrwSuP2vUU71Nm7ScsBiSqsW1s"],
+            "position_address": "3FK34GHWK9SsoEjV7E3cHHWz5hNXufcfwnQaY7pyh5V1",
             "simulate": "True",
         }
 
@@ -661,7 +669,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -736,6 +744,14 @@ class TestDefiTransactionApi:
         )
         assert normalized["ratio"] == "1"
         assert normalized["slippageBps"] == "300"
+        assert (
+            normalized["stakeAccounts"]
+            == '["5vUt9pxBK9KaaHm19okrwSuP2vUU71Nm7ScsBiSqsW1s"]'
+        )
+        assert (
+            normalized["positionAddress"]
+            == "3FK34GHWK9SsoEjV7E3cHHWz5hNXufcfwnQaY7pyh5V1"
+        )
         assert normalized["simulate"] == "True"
 
         assert response is not None
@@ -775,6 +791,8 @@ class TestDefiTransactionApi:
             "token": (),
             "ratio": "ratio_example",
             "slippage_bps": "slippage_bps_example",
+            "stake_accounts": [""],
+            "position_address": "position_address_example",
             "simulate": True,
         }
 
@@ -788,7 +806,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -944,7 +962,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -1078,7 +1096,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -1255,7 +1273,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",
@@ -1379,7 +1397,7 @@ class TestDefiTransactionApi:
                         "from": "0x1234567890123456789012345678901234567890",
                         "to": "0x87870Bca3F3fF67225794148012b73643B78Ed36",
                         "value": "0x0",
-                        "data": "0xa9059cbb000000000000000000000000dead00000000000000000000000000000000dead00000000000000000000000000000000000000000000000000000000000000000a",
+                        "data": "0xa9059cbb…",
                         "gasLimit": "200000",
                         "gasPrice": "3000000000",
                         "maxPriorityFeePerGas": "1000000000",

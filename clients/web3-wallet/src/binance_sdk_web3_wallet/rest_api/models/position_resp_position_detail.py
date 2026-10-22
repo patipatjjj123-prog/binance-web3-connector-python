@@ -35,7 +35,7 @@ class PositionRespPositionDetail(BaseModel):
 
     position_index: Optional[StrictStr] = Field(
         default=None,
-        description="Position index (e.g. the Uniswap-V3-style position number).",
+        description="Position index / handle. For EVM concentrated-liquidity positions this is the Uniswap-V3-style position number. For Solana protocols whose redeem mints a withdrawal ticket (e.g. `renzo`, `marinadefinance` liquid, `jito`), this is the ticket / record PDA and is what `claim` `REDEMPTION` takes as `redemptionId` once the cooldown ends. For Jupiter Lend Borrow (`jupiter`, surface `lend_borrow_supply`), this is the position PDA passed to `redeem` as `positionAddress`.",
         alias="positionIndex",
     )
     nft_id: Optional[StrictStr] = Field(
@@ -82,8 +82,13 @@ class PositionRespPositionDetail(BaseModel):
     )
     redemption_id: Optional[StrictStr] = Field(
         default=None,
-        description="Redemption record ID (for pending redemptions). Null when not a pending redemption.",
+        description="Redemption record ID (the withdrawal ticket / record handle) for pending redemptions. For Solana protocols whose redeem mints a ticket (`renzo`, `marinadefinance` liquid, `jito`, `jupiter` Stake JUP), this mirrors `positionIndex` and is populated only after the cooldown ends (`unlockTimeReached = true`); `null` while cooling down — poll the position list until it appears, then pass it to `claim` `REDEMPTION`. Null when not a pending redemption.",
         alias="redemptionId",
+    )
+    user_stake_account: Optional[StrictStr] = Field(
+        default=None,
+        description="Base58 stake account address for Solana native staking (`sol_staking`), or the native stake account a Jupiter jupSOL redeem created (which also surfaces under `sol_staking` in the position list — its `redemptionId` equals this address). Pass it to `redeem` / `claim` `REDEMPTION` as the single element of `stakeAccounts`; for jupSOL either the `sol_staking` or the jupSOL `investmentId` works. Null for non-staking positions.",
+        alias="userStakeAccount",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -98,6 +103,7 @@ class PositionRespPositionDetail(BaseModel):
         "stakeState",
         "claimTypes",
         "redemptionId",
+        "userStakeAccount",
     ]
 
     @field_validator("claim_types")
@@ -224,6 +230,14 @@ class PositionRespPositionDetail(BaseModel):
         if self.redemption_id is None and "redemption_id" in self.model_fields_set:
             _dict["redemptionId"] = None
 
+        # set to None if user_stake_account (nullable) is None
+        # and model_fields_set contains the field
+        if (
+            self.user_stake_account is None
+            and "user_stake_account" in self.model_fields_set
+        ):
+            _dict["userStakeAccount"] = None
+
         return _dict
 
     @classmethod
@@ -248,6 +262,7 @@ class PositionRespPositionDetail(BaseModel):
                 "stakeState": obj.get("stakeState"),
                 "claimTypes": obj.get("claimTypes"),
                 "redemptionId": obj.get("redemptionId"),
+                "userStakeAccount": obj.get("userStakeAccount"),
             }
         )
         # store additional fields in additional_properties

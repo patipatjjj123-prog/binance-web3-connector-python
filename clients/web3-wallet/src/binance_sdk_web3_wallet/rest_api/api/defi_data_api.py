@@ -46,13 +46,14 @@ class DefiDataApi:
         recv_window: Optional[int] = None,
         nonce: Optional[str] = None,
         binance_chain_ids: Optional[List[str]] = None,
+        force_refresh: Optional[bool] = None,
     ) -> ApiResponse[GetDeFiPositionsResponse]:
         """
                 Get DeFi Positions
                 POST /api/v1/defi/data/position/list
                 https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/defi-data#get-de-fi-positions
 
-                Query DeFi positions for one or more wallet addresses across the supported EVM chains. Returns protocol-level position summaries with token breakdowns. Optionally filter by specific chains via `binanceChainIds`; when omitted, positions across all supported chains are returned.
+                Query DeFi positions for one or more wallet addresses across the supported chains. Returns protocol-level position summaries with token breakdowns. Optionally filter by specific chains via `binanceChainIds`; when omitted, positions across all supported chains are returned.
         Position coverage is wider than the protocol list used by data queries and transaction building — see Supported Chains & Protocols for the difference.
 
                 Args:
@@ -60,6 +61,7 @@ class DefiDataApi:
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
                     binance_chain_ids (Optional[List[str]] = None): Optional chain filter. When set, only positions on the specified chains are returned; when omitted, positions across all supported chains are returned. See Supported Chains & Protocols for the supported chain ID values — unsupported values are rejected with 40001.
+                    force_refresh (Optional[bool] = None): Force a cache bypass and re-read the latest on-chain state. Defaults to `false` (serves cached data). Set to `true` right after a redeem / claim to see the updated position immediately — the cache otherwise lags by a short window.
 
                 Returns:
                     ApiResponse[GetDeFiPositionsResponse]
@@ -80,7 +82,11 @@ class DefiDataApi:
             "recv_window": recv_window,
             "nonce": nonce,
         }
-        payload = {"addresses": addresses, "binance_chain_ids": binance_chain_ids}
+        payload = {
+            "addresses": addresses,
+            "binance_chain_ids": binance_chain_ids,
+            "force_refresh": force_refresh,
+        }
 
         return send_request(
             self._session,

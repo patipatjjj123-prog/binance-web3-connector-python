@@ -67,6 +67,7 @@ class TestDefiDataApi:
         params = {
             "addresses": ["0x66faa5ded68cc83a71bc172fb03c17a6bcb32f7a"],
             "binance_chain_ids": ["56"],
+            "force_refresh": "True",
         }
 
         expected_response = {
@@ -126,6 +127,7 @@ class TestDefiDataApi:
                                                                 "REWARD_INVESTMENT",
                                                             ],
                                                             "redemptionId": "redem-abc123",
+                                                            "userStakeAccount": "5vUt9pxBK9KaaHm19okrwSuP2vUU71Nm7ScsBiSqsW1s",
                                                         },
                                                         "positionValue": "10.51121227",
                                                         "tokenList": {
@@ -197,6 +199,7 @@ class TestDefiDataApi:
             normalized["addresses"] == '["0x66faa5ded68cc83a71bc172fb03c17a6bcb32f7a"]'
         )
         assert normalized["binanceChainIds"] == '["56"]'
+        assert normalized["forceRefresh"] == "True"
 
         assert response is not None
 
@@ -226,6 +229,7 @@ class TestDefiDataApi:
             "recv_window": 5000,
             "nonce": "unique-nonce-string",
             "binance_chain_ids": [""],
+            "force_refresh": True,
         }
 
         expected_response = {
@@ -285,6 +289,7 @@ class TestDefiDataApi:
                                                                 "REWARD_INVESTMENT",
                                                             ],
                                                             "redemptionId": "redem-abc123",
+                                                            "userStakeAccount": "5vUt9pxBK9KaaHm19okrwSuP2vUU71Nm7ScsBiSqsW1s",
                                                         },
                                                         "positionValue": "10.51121227",
                                                         "tokenList": {
@@ -626,7 +631,7 @@ class TestDefiDataApi:
                 "description": "PancakeSwap is a decentralized exchange (DEX) built on BNB Chain that utilizes an automated market making (AMM) system.",
                 "websiteUrl": "https://pancakeswap.finance/",
                 "investType": ["LiquidityPool"],
-                "supportedChains": ["56", "1"],
+                "supportedChains": ["56", "1", "CT_501"],
                 "tvl": "290233074",
                 "tags": ["DeFi", "DEX"],
                 "founded": "2020",
@@ -739,7 +744,7 @@ class TestDefiDataApi:
                 "description": "PancakeSwap is a decentralized exchange (DEX) built on BNB Chain that utilizes an automated market making (AMM) system.",
                 "websiteUrl": "https://pancakeswap.finance/",
                 "investType": ["LiquidityPool"],
-                "supportedChains": ["56", "1"],
+                "supportedChains": ["56", "1", "CT_501"],
                 "tvl": "290233074",
                 "tags": ["DeFi", "DEX"],
                 "founded": "2020",
@@ -1060,7 +1065,7 @@ class TestDefiDataApi:
                         "apyBps": 1235,
                         "apyDisplay": "12.35%",
                         "investType": ["Earn", "LiquidityPool"],
-                        "supportedChains": ["56", "1"],
+                        "supportedChains": ["56", "1", "CT_501"],
                     }
                 ],
             },
@@ -1134,7 +1139,7 @@ class TestDefiDataApi:
                         "apyBps": 1235,
                         "apyDisplay": "12.35%",
                         "investType": ["Earn", "LiquidityPool"],
-                        "supportedChains": ["56", "1"],
+                        "supportedChains": ["56", "1", "CT_501"],
                     }
                 ],
             },
